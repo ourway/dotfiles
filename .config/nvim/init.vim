@@ -9,13 +9,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-buftabline'
 call plug#end()
 
-" sets 
+" sets
 set hidden
 " config
 let g:mix_format_on_save = 1
 
+let mapleader = ","
 inoremap jj <Esc>
-noremap ,e :Files<CR>
+noremap ,e :Files <CR>
 
 nnoremap <C-N> :bnext<CR>
 nnoremap <TAB> :bnext<CR>
