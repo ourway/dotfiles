@@ -1,0 +1,29 @@
+# Jeff McCune <jeff@puppetlabs.com>
+# 2010-07-30
+# GNU Screen configuration file
+
+defutf8 on
+defflow off
+vbell off
+vbellwait 0
+autodetach on
+startup_message off
+defscrollback 100000
+maptimeout 5
+
+term screen-256color
+
+# Fix numpad in nested screens
+
+deflogin on
+shell -$SHELL
+screen
+shell $SHELL
+deflogin off
+
+activity "activity in %n (%t) [%w:%s]~"
+caption string "%{03} "
+rendition so "="
+sorendition "="
+hardstatus alwayslastline "%{= KW} Screen(s): %-w%{= wk} %50>%n %t%{-}%+w%< %=%{KW}[%c %M %d %Y ]"
+termcapinfo xterm*|rxvt*|kterm*|Eterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
