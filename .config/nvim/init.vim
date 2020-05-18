@@ -90,7 +90,7 @@ let g:mix_format_on_save = 1
 let g:jsx_ext_required = 0
 
 let mapleader = ","
-inoremap <silent> jj <ESC>
+inoremap <silent> jj <ESC>:w<CR>
 noremap ,e :Files <CR>
 
 
