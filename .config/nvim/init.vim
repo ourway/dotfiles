@@ -31,6 +31,7 @@ Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'ap/vim-buftabline'
 Plug 'lifepillar/vim-gruvbox8'
+Plug 'vim-python/python-syntax'
 Plug 'psf/black', { 'tag': '19.10b0' }
 "Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
@@ -38,6 +39,13 @@ call plug#end()
 
 " sets 
 set shell=/bin/zsh
+set tabstop=8
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+filetype indent on
+set modeline
+
 set nocompatible
 set hidden
 set ttyfast
@@ -57,9 +65,6 @@ set timeoutlen=300
 set ttimeoutlen=0
 set undofile
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
 set autoindent
 set fileformat=unix
 set list
@@ -134,7 +139,7 @@ let g:jedi#completions_enabled = 0
 let g:jedi#use_tabs_not_buffers = 1
 autocmd FileType python setlocal completeopt-=preview
 
-let g:python3_host_prog = '/Users/farshid.ashouri/.config/nvim_env/bin/python'
+let g:python3_host_prog = '/Users/rodmena/.config/nvim_env/bin/python'
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -181,3 +186,5 @@ let g:limelight_eop = '\ze\n^\s'
 let g:limelight_priority = -1
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let g:python_highlight_all = 1
+hi Visual term=reverse cterm=reverse guibg=Grey
