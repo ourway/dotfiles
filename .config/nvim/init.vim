@@ -189,3 +189,4 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let g:python_highlight_all = 1
 hi Visual term=reverse cterm=reverse guibg=Grey
 highlight Comment ctermfg=grey
+tnoremap <Esc> <C-\><C-n>
