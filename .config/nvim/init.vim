@@ -13,10 +13,13 @@ Plug 'yorickpeterse/happy_hacking.vim'
 Plug 'mhinz/vim-mix-format'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'fisadev/vim-isort'
 Plug 'junegunn/goyo.vim'
 Plug 'preservim/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'tpope/vim-fugitive'
 Plug '/usr/local/opt/fzf'
 Plug 'hashivim/vim-terraform'
 Plug 'davidhalter/jedi-vim'
@@ -32,6 +35,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'ap/vim-buftabline'
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'vim-python/python-syntax'
+Plug 'kshenoy/vim-signature'
 Plug 'psf/black', { 'tag': '19.10b0' }
 "Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
@@ -52,7 +56,7 @@ set ttyfast
 set relativenumber
 set number
 set colorcolumn=99
-
+highlight ColorColumn ctermbg=5
 set noswapfile
 set exrc
 "set secure
@@ -67,7 +71,29 @@ set undofile
 set expandtab
 set autoindent
 set fileformat=unix
-set list
+set listchars=eol:¬,tab:▷\ ,
+set indentkeys=o,O
+set shiftround
+set showbreak=
+set breakindent
+set display=lastline,uhex
+set virtualedit=onemore
+set fillchars=vert:\ ,fold:-,diff:·     " Spaces are enough for vertical split separators.
+set diffopt=filler,foldcolumn:0,vertical  " Show lines where missing, no need for a foldcolumn during diff, split vertically by default
+set timeoutlen=1000 ttimeoutlen=50      " Set timeouts so that terminals act briskly.
+if exists("+mouse")
+    set mouse=a                         " Mice are wonderful.
+endif
+if exists("+cursorline")
+    augroup CursorLine
+        autocmd!
+        autocmd InsertEnter * set cursorline
+        autocmd InsertLeave * set nocursorline
+    augroup end
+endif
+
+set updatetime=2000
+autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 nnoremap j gj
 nnoremap k gk
 
@@ -78,6 +104,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set smarttab
 set showmatch
 map <leader><space> :let @/=''<cr> " clear search
 
@@ -138,6 +165,7 @@ let g:deoplete#enable_at_startup = 1
 let g:jedi#completions_enabled = 0
 let g:jedi#use_tabs_not_buffers = 1
 autocmd FileType python setlocal completeopt-=preview
+autocmd FileType *.go execute ':!go fmt %'
 
 let g:python3_host_prog = '/Users/rodmena/.config/nvim_env/bin/python'
 
@@ -188,5 +216,28 @@ let g:limelight_priority = -1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let g:python_highlight_all = 1
 hi Visual term=reverse cterm=reverse guibg=Grey
+
 highlight Comment ctermfg=grey
-tnoremap <Esc> <C-\><C-n>
+
+set wildignore=*.pyc,*.o,*.obj,*.pyd
+let g:netrw_list_hide= '.*\.pyc$'
+let g:vim_isort_config_overrides = {
+  \ 'include_trailing_comma': 1, 'multi_line_output': 3, 'intent': '    ', 'line_length': 99}
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+map <C-n> :NERDTreeToggle<CR>
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let g:SignatureIncludeMarks = 'abcdefghijklmnopqrstuvwxyz'
+let g:SignatureMarkerLineHL = 'SignatureMarkLine'
+
+let g:python_highlight_class_vars = 1
+let g:python_highlight_string_formatting = 1
+let g:python_highlight_string_format = 1
+let g:python_highlight_string_templates = 1
+let g:python_highlight_indent_errors = 1
+let g:python_highlight_space_errors = 0
+let g:python_highlight_doctests = 1
